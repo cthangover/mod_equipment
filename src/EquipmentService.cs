@@ -62,6 +62,10 @@ namespace Cthangover.Mods.Equipment
                 : slot.Accepts.Any(a => string.Equals(a, equipType, StringComparison.OrdinalIgnoreCase));
         }
 
+        /// <summary>Whether an item's archetype list lets <paramref name="archetype"/> wear it; an empty list lets anyone.</summary>
+        public static bool WearableBy(IReadOnlyList<string> allowed, string archetype)
+            => allowed is not { Count: > 0 } || allowed.Any(a => string.Equals(a, archetype, StringComparison.OrdinalIgnoreCase));
+
         /// <summary>The slots an item fits, in display order.</summary>
         public static List<EquipSlotInfo> SlotsFor(string itemId)
         {
@@ -103,12 +107,31 @@ namespace Cthangover.Mods.Equipment
                 return false;
             }
             var allowed = ExtraData.Read<List<string>>(Item(itemId)?.ExtraProperties, "Archetypes", itemId);
-            if (allowed is { Count: > 0 } && !allowed.Any(a => string.Equals(a, StatsService.ArchetypeOf(who), StringComparison.OrdinalIgnoreCase)))
+            if (!WearableBy(allowed, StatsService.ArchetypeOf(who)))
             {
                 reasonKey = "equipment/wrong_archetype";
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// What the character sheet's picker lists for <paramref name="slot"/>: the bag's items that
+        /// <paramref name="who"/> may put there, each id once, in bag order. The same
+        /// <see cref="CanEquip"/> rule as <see cref="Equip"/>, so the picker never offers what
+        /// the service would refuse.
+        /// </summary>
+        public static List<string> BagCandidates(string who, string slot)
+        {
+            var inventory = Inventory;
+            if (inventory == null || slot == null)
+                return new List<string>();
+            return inventory.Items
+                .Where(c => c?.Item != null && c.Count > 0)
+                .Select(c => c.Item.ID)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .Where(id => CanEquip(who, id, slot, out _))
+                .ToList();
         }
 
         /// <summary>
@@ -129,12 +152,22 @@ namespace Cthangover.Mods.Equipment
             if (fromInventory && (inventory == null || !inventory.Remove(itemId, 1)))
                 return false;
 
-            var worn = Of(id);
-            if (worn.TryGetValue(target.ID, out var previous) && !string.IsNullOrEmpty(previous))
-                inventory?.Add(previous, 1);
-            worn[target.ID] = Item(itemId)?.ID ?? itemId;
+            var replaced = PutInSlot(Of(id), target.ID, Item(itemId)?.ID ?? itemId);
+            if (replaced != null)
+                inventory?.Add(replaced, 1);
             Changed(id);
             return true;
+        }
+
+        /// <summary>
+        /// Writes <paramref name="item"/> into <paramref name="slot"/> of a character's worn items and
+        /// returns the item it replaces (null for an empty slot). The caller returns that item to the bag.
+        /// </summary>
+        public static string PutInSlot(IDictionary<string, string> worn, string slot, string item)
+        {
+            worn.TryGetValue(slot, out var previous);
+            worn[slot] = item;
+            return string.IsNullOrEmpty(previous) ? null : previous;
         }
 
         /// <summary>Takes off what <paramref name="who"/> wears in <paramref name="slot"/>, back into the inventory.</summary>

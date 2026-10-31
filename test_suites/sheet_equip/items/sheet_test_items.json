@@ -1,0 +1,9 @@
+{
+  "Kind": "item",
+  "Items": [
+    { "Id": "sheet_test/short_sword", "Name": "sheet_test/item/short_sword", "Sprite": "classic/wood_sword", "Cost": 4, "ItemType": "TargetUsed", "ItemAction": "action/equip", "verb": "equipment/verb_equip", "Equip": "sword", "Traits": [ { "Stat": "str", "Add": 2 } ] },
+    { "Id": "sheet_test/long_sword", "Name": "sheet_test/item/long_sword", "Sprite": "classic/iron_sword", "Cost": 9, "ItemType": "TargetUsed", "ItemAction": "action/equip", "verb": "equipment/verb_equip", "Equip": "sword", "Traits": [ { "Stat": "str", "Add": 3 } ] },
+    { "Id": "sheet_test/oak_wand", "Name": "sheet_test/item/oak_wand", "Sprite": "classic/oak_staff", "Cost": 7, "ItemType": "TargetUsed", "ItemAction": "action/equip", "verb": "equipment/verb_equip", "Equip": "staff", "Archetypes": [ "classic/mage" ], "Traits": [ { "Stat": "int", "Add": 3 } ] },
+    { "Id": "sheet_test/leather_vest", "Name": "sheet_test/item/leather_vest", "Sprite": "classic/leather_armor", "Cost": 5, "ItemType": "TargetUsed", "ItemAction": "action/equip", "verb": "equipment/verb_equip", "Equip": "armor", "Traits": [ { "Stat": "vit", "Add": 2 } ] }
+  ]
+}

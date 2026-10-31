@@ -26,6 +26,32 @@ namespace Cthangover.Mods.Equipment.Tests
             ModAssert.False(EquipmentService.Accepts(null, "sword"), "no slot");
         }
 
+        [ModTest("archetypes/wearable_by_list_or_anyone")]
+        static void WearableByListOrAnyone(ModTestContext ctx)
+        {
+            ModAssert.True(EquipmentService.WearableBy(null, "classic/warrior"), "no list: anyone");
+            ModAssert.True(EquipmentService.WearableBy(new List<string>(), "classic/warrior"), "empty list: anyone");
+            ModAssert.True(EquipmentService.WearableBy(new List<string> { "classic/mage" }, "CLASSIC/MAGE"), "listed class in any case");
+            ModAssert.False(EquipmentService.WearableBy(new List<string> { "classic/mage" }, "classic/warrior"), "another class is refused");
+            ModAssert.False(EquipmentService.WearableBy(new List<string> { "classic/mage" }, null), "no class is refused when a list exists");
+        }
+
+        [ModTest("slots/put_in_slot_returns_what_it_replaces")]
+        static void PutInSlotReturnsWhatItReplaces(ModTestContext ctx)
+        {
+            var worn = new Dictionary<string, string> { ["weapon"] = "sheet_test/short_sword", ["body"] = "sheet_test/leather_vest" };
+
+            var replaced = EquipmentService.PutInSlot(worn, "weapon", "sheet_test/long_sword");
+            ModAssert.Equal("sheet_test/short_sword", replaced, "the old weapon is returned for the bag");
+            ModAssert.Equal("sheet_test/long_sword", worn["weapon"], "the new weapon is worn");
+            ModAssert.Equal("sheet_test/leather_vest", worn["body"], "other slots are untouched");
+
+            var empty = EquipmentService.PutInSlot(worn, "accessory", "sheet_test/ring");
+            ModAssert.Null(empty, "an empty slot replaces nothing");
+            ModAssert.Equal("sheet_test/ring", worn["accessory"], "the empty slot now holds the item");
+            ModAssert.Equal(3, worn.Count, "no slot was added or lost");
+        }
+
         [ModTest("state/json_round_trip")]
         static void JsonRoundTrip(ModTestContext ctx)
         {

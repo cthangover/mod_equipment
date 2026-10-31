@@ -11,5 +11,13 @@
   "test_sources": [
     "tests/*.cs"
   ],
-  "depends": ["stats_base>=1", "items_base>=1", "characters_base>=1", "ui_base>=1"]
+  "depends": ["stats_base>=1", "items_base>=1", "characters_base>=1", "ui_base>=1"],
+  "test_suites": [
+    {
+      "id": "sheet_equip",
+      "activate": [
+        "--itest=sheet_equip"
+      ]
+    }
+  ]
 }
