@@ -6,7 +6,11 @@ Mod cần Stats Engine và Items Base. Các ô và trang bị của RPG Plus đ�
 
 ## Mặc đồ
 
-Mở túi, chọn món đồ và bấm **Trang bị**, rồi chọn ai sẽ mặc nó:
+**Từ bảng nhân vật.** Mở bảng nhân vật, chọn nhân vật trong danh sách đội, rồi bấm **Trang bị…** ở ô trống. Dưới ô sẽ hiện danh sách các món trong túi hợp với ô này cho nhân vật đó: kiếm không hiện ở ô thân, và gậy của pháp sư không hiện với chiến binh. Bấm một món là được mặc. Ô đã có đồ có nút **Thay**, mở cùng danh sách: món đang mặc trở lại túi, món mới được mặc.
+
+![Bảng của đồng minh mở ô Weapon trống: «Trang bị: Weapon» liệt kê Short sword và Long sword trong túi; gậy pháp sư và giáp không được đề nghị.](assets/sheet-picker.png)
+
+**Từ túi.** Mở túi, chọn món và bấm **Trang bị**, rồi chọn ai sẽ mặc:
 
 ![Túi đồ trong RPG Plus: chọn Leather armour, chi tiết của nó (Targeted, loại trang bị armor, đặc tính def +2 và hp +6, động từ Trang bị), nút Trang bị và danh sách mục tiêu với anh hùng 42/42.](assets/bag-equip.jpg)
 
@@ -16,9 +20,9 @@ Món đồ rời khỏi túi và xuất hiện trong khối **Trang bị** của
 
 Giáp tăng từ 4 lên 6 — đó là `def` +2 của món giáp. Máu tăng từ 42 lên 48: nền 38 cộng `hp` +6 của món giáp là 44, và phần thưởng 10% máu của chiến binh đưa lên 48.
 
-- **Tháo** trên bảng chỉ số đưa món đồ trở lại túi.
-- Mặc món mới vào ô đã có đồ thì món cũ quay về túi.
-- Chỉ có thể chọn thành viên trong đội.
+- **Tháo** trên bảng nhân vật trả món đồ về túi.
+- **Thay** trên bảng nhân vật mặc món mới, món cũ trả về túi.
+- Chỉ chọn được thành viên trong đội.
 
 ## Biến vật phẩm thành trang bị
 
@@ -81,3 +85,4 @@ Trang bị đang mặc được lưu cùng game.
 1. **Bấm Trang bị xong không có ai để chọn.** Danh sách mục tiêu chỉ có thành viên đội; trong RPG Plus, anh hùng gia nhập đội khi bước vào làng, sau phần mở đầu.
 2. **Không mặc được món đồ.** Không ô nào nhận loại `Equip` của nó, hoặc `Archetypes` của nó không gồm lớp của nhân vật.
 3. **Bảng chỉ số không đổi.** `Traits` của món đồ nêu những chỉ số mà game không định nghĩa.
+4. **Danh sách trống.** Trong túi không có món nào hợp ô này cho nhân vật này. Kiểm tra kiểu `Equip` của món với `Accepts` của ô và xem `Archetypes`.

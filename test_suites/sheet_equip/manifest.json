@@ -1,0 +1,10 @@
+{
+  "name": "Sheet Equip Test",
+  "description": "Integration test of the character sheet's equipment: a second hero joins the rpg_plus party, the party list switches between the two, an empty weapon slot opens the picker of the bag (only what fits this slot and this hero), a pick puts the item on, Replace puts the worn sword back into the bag and the new one on with the stats recalculated, an empty trinket slot shows its empty message, Take off and the hero's own sheet stay apart. Activated by --itest=sheet_equip with --game=rpg_plus --new.",
+  "sources": [
+    "src/*.cs"
+  ],
+  "depends": [
+    "rpg_plus_game>=1"
+  ]
+}

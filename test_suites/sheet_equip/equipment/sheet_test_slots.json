@@ -1,0 +1,6 @@
+{
+  "Kind": "equip_slot",
+  "Items": [
+    { "Id": "trinket", "Name": "sheet_test/slot/trinket", "Order": 4, "Accepts": [ "trinket" ] }
+  ]
+}

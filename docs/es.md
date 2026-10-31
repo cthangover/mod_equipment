@@ -6,7 +6,11 @@ Necesita Stats Engine e Items Base. Las ranuras y el equipo de RPG Plus vienen d
 
 ## Cómo ponerse algo
 
-Abre la bolsa, elige el objeto y pulsa **Equipar**, después escoge quién lo lleva:
+**Desde la hoja.** Abre la hoja del personaje, elige el personaje en la lista del grupo y pulsa **Equipar…** en un hueco vacío. Bajo el hueco se abre una lista con los objetos de la bolsa que encajan en ese hueco para ese personaje: una espada nunca aparece en el hueco del cuerpo, y el bastón de un mago no aparece para un guerrero. Pulsa un objeto y quedará puesto. Un hueco ocupado tiene **Reemplazar**, que abre la misma lista: el objeto puesto vuelve a la bolsa y el nuevo se equipa.
+
+![La hoja del aliado con el hueco Weapon abierto: «Equipar: Weapon» muestra la espada corta y la larga de la bolsa; el bastón del mago y la armadura no se ofrecen.](assets/sheet-picker.png)
+
+**Desde la bolsa.** Abre la bolsa, elige el objeto, pulsa **Equipar** y después indica quién lo llevará:
 
 ![El inventario de RPG Plus: Leather armour seleccionada, sus detalles (Targeted, tipo de equipo armor, rasgos def +2 y hp +6, verbo Equip), el botón de equipar y la lista de objetivos con el héroe a 42/42.](assets/bag-equip.jpg)
 
@@ -17,8 +21,8 @@ El objeto sale de la bolsa y aparece en el bloque **Equipo** de la hoja de perso
 La armadura pasó de 4 a 6 — el `def` de la armadura, +2. La salud pasó de 42 a 48: la base 38 más el `hp` de la armadura, +6, da 44, y el bono de salud del 10% del guerrero lo deja en 48.
 
 - **Quitar** en la hoja devuelve el objeto a la bolsa.
-- Poner algo en una ranura ocupada devuelve el objeto anterior a la bolsa.
-- Solo se puede elegir a miembros del grupo.
+- **Reemplazar** en la hoja pone el objeto nuevo y devuelve el viejo a la bolsa.
+- Solo se pueden elegir miembros del grupo.
 
 ## Convertir un objeto en equipo
 
@@ -81,3 +85,4 @@ Lo equipado se guarda con la partida.
 1. **Tras equipar no hay a quién elegir.** La lista de objetivos muestra solo miembros del grupo; en RPG Plus el héroe se une al grupo al entrar en la aldea, después del prólogo.
 2. **El objeto no se puede poner.** Ninguna ranura acepta su tipo `Equip`, o sus `Archetypes` no incluyen la clase del personaje.
 3. **La hoja no cambia.** Los `Traits` del objeto nombran estadísticas que el juego no define.
+4. **La lista está vacía.** En la bolsa no hay nada que encaje en este hueco para este personaje. Compara el tipo `Equip` del objeto con `Accepts` del hueco y revisa sus `Archetypes`.

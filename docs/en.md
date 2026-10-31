@@ -6,7 +6,11 @@ It needs Stats Engine and Items Base. The slots and the gear of RPG Plus come fr
 
 ## Putting something on
 
-Open the bag, pick the item and press **Equip**, then choose who wears it:
+**From the sheet.** Open the character sheet, choose the character in the party list and click **Equip…** on an empty slot. A list opens under the slot with the bag's items that fit this slot for this character: a sword never appears for the body slot, and a mage's staff does not appear for a warrior. Click an item and it is worn. A slot that already holds something has **Replace**, which opens the same list: the worn item goes back to the bag and the new one goes on.
+
+![The ally's sheet with the empty Weapon slot opened: "Put on: Weapon" lists the Short sword and the Long sword from the bag; the mage's staff and the armour are not offered.](assets/sheet-picker.png)
+
+**From the bag.** Open the bag, pick the item and press **Equip**, then choose who wears it:
 
 ![The inventory in RPG Plus: Leather armour selected, its details (Targeted, Equip type armor, Traits def +2 and hp +6, verb Equip), the Equip button and the target list with the Hero at 42/42.](assets/bag-equip.jpg)
 
@@ -17,7 +21,7 @@ The item leaves the bag and appears in the **Equipment** block of the character 
 Armour went from 4 to 6 — the armour's `def` +2. Health went from 42 to 48: the base 38 plus the armour's `hp` +6 is 44, and the warrior's 10% health bonus makes it 48.
 
 - **Take off** on the sheet puts the item back into the bag.
-- Putting something into a taken slot returns the old item to the bag.
+- **Replace** on the sheet puts the new item on and the old one back into the bag.
 - Only party members can be chosen.
 
 ## Making an item wearable
@@ -81,3 +85,4 @@ What is worn is saved with the game.
 1. **No one to choose after Equip.** The target list shows party members only; in RPG Plus the hero joins the party on entering the village, after the prologue.
 2. **The item cannot be put on.** No slot accepts its `Equip` type, or its `Archetypes` do not include the character's class.
 3. **The sheet does not change.** The item's `Traits` name stats the game does not define.
+4. **The list is empty.** The bag holds nothing that fits this slot for this character. Compare the item's `Equip` type with the slot's `Accepts`, and check its `Archetypes`.

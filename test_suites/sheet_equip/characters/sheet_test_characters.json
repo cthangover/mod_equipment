@@ -1,0 +1,23 @@
+{
+  "Kind": "character",
+  "Items": [
+    {
+      "Id": "sheet_test/ally",
+      "Name": "sheet_test/character/ally",
+      "Level": 1,
+      "Point": 1,
+      "Health": 20,
+      "Defence": 0,
+      "Attack": 4,
+      "Archetype": "classic/warrior",
+      "Stats": {
+        "str": 6,
+        "vit": 4,
+        "agi": 4
+      },
+      "Actions": [
+        "physics/attack"
+      ]
+    }
+  ]
+}

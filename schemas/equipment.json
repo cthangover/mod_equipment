@@ -19,7 +19,7 @@
         { "Key": "Accepts", "Type": "ref_list", "Name": "equipment/schema/field/accepts", "Description": "equipment/schema/field/accepts_desc" } ] },
     { "Kind": "item",
       "Fields": [
-        { "Key": "Equip", "Type": "text", "Name": "equipment/schema/field/equip", "Description": "equipment/schema/field/equip_desc" },
+        { "Key": "Equip", "Type": "pick", "Kind": "equip_slot", "From": "Accepts", "Name": "equipment/schema/field/equip", "Description": "equipment/schema/field/equip_desc" },
         { "Key": "Traits", "Type": "list", "Name": "equipment/schema/field/traits", "Description": "equipment/schema/field/traits_desc", "Of": [
           { "Key": "Stat", "Type": "ref", "Kind": "stat", "Required": true, "Name": "equipment/schema/field/stat" },
           { "Key": "Add", "Type": "number", "Name": "equipment/schema/field/add" },
