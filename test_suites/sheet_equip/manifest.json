@@ -5,6 +5,6 @@
     "src/*.cs"
   ],
   "depends": [
-    "rpg_plus_game>=1"
+    "rpg_plus_game>=0.1.0"
   ]
 }
