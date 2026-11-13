@@ -74,7 +74,7 @@ action equip.remove who=rpg_hero slot=weapon
 when "equipped(rpg_hero, 'classic/wood_sword')" -> :armed
 ```
 
-- `equip.put`은 가방에서 아이템을 착용합니다. `give=1`을 붙이면 대신 아이템을 지급하므로 가방에 없어도 됩니다. RPG Plus는 이 방식으로 직업마다 시작 무기를 줍니다. 여러 슬롯이 맞을 수 있으면 `slot=`으로 고릅니다.
+- `equip.put`은 가방에서 아이템을 착용합니다. `give>=0.1.0`을 붙이면 대신 아이템을 지급하므로 가방에 없어도 됩니다. RPG Plus는 이 방식으로 직업마다 시작 무기를 줍니다. 여러 슬롯이 맞을 수 있으면 `slot=`으로 고릅니다.
 - `equip.remove`는 슬롯에 착용된 것을 벗겨 가방으로 돌려보냅니다.
 - 아이템이 착용되어 있는 동안 `equipped(who, 'item')`은 참입니다.
 

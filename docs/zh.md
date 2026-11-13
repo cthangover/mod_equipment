@@ -74,7 +74,7 @@ action equip.remove who=rpg_hero slot=weapon
 when "equipped(rpg_hero, 'classic/wood_sword')" -> :armed
 ```
 
-- `equip.put` 从背包中穿上物品；加了 `give=1` 则改为直接发放物品，无需在背包里。RPG Plus 就是这样给每个职业发初始武器的。当多个栏位都合适时，用 `slot=` 指定栏位。
+- `equip.put` 从背包中穿上物品；加了 `give>=0.1.0` 则改为直接发放物品，无需在背包里。RPG Plus 就是这样给每个职业发初始武器的。当多个栏位都合适时，用 `slot=` 指定栏位。
 - `equip.remove` 卸下某栏位中穿戴的物品，放回背包。
 - 只要物品还穿在身上，`equipped(who, 'item')` 就为真。
 

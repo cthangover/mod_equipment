@@ -74,7 +74,7 @@ action equip.remove who=rpg_hero slot=weapon
 when "equipped(rpg_hero, 'classic/wood_sword')" -> :armed
 ```
 
-- `equip.put` equipa un objeto desde la bolsa; con `give=1` el objeto se concede sin más y no hace falta que esté en la bolsa. RPG Plus da así a cada clase su arma inicial. `slot=` elige una ranura cuando varias servirían.
+- `equip.put` equipa un objeto desde la bolsa; con `give>=0.1.0` el objeto se concede sin más y no hace falta que esté en la bolsa. RPG Plus da así a cada clase su arma inicial. `slot=` elige una ranura cuando varias servirían.
 - `equip.remove` quita lo equipado en una ranura, de vuelta a la bolsa.
 - `equipped(who, 'item')` es verdad mientras el objeto esté equipado.
 
