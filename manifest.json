@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "author": "ct",
   "description": "Wearable gear for any game with stats: slots as data, items become equipment by their JSON keys, and worn bonuses flow into sheets, battles, checks and conditions at once.",
-  "category": "gameplay",
+  "categories": ["gameplay"],
   "sources": [
     "src/**/*.cs"
   ],
