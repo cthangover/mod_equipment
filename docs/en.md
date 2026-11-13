@@ -74,7 +74,7 @@ action equip.remove who=rpg_hero slot=weapon
 when "equipped(rpg_hero, 'classic/wood_sword')" -> :armed
 ```
 
-- `equip.put` puts an item on from the bag; with `give=1` the item is granted instead and need not be in the bag. RPG Plus gives each class its starting weapon this way. `slot=` picks a slot when several would fit.
+- `equip.put` puts an item on from the bag; with `give>=0.1.0` the item is granted instead and need not be in the bag. RPG Plus gives each class its starting weapon this way. `slot=` picks a slot when several would fit.
 - `equip.remove` takes off what is worn in a slot, back into the bag.
 - `equipped(who, 'item')` is true while the item is worn.
 

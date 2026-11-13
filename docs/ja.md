@@ -74,7 +74,7 @@ action equip.remove who=rpg_hero slot=weapon
 when "equipped(rpg_hero, 'classic/wood_sword')" -> :armed
 ```
 
-- `equip.put` はかばんからアイテムを装備します。`give=1` を付けると代わりにアイテムを付与し、かばんになくて構いません。RPG Plus はこのやり方で各職業に初期武器を与えています。複数のスロットが候補になるなら `slot=` で指定します。
+- `equip.put` はかばんからアイテムを装備します。`give>=0.1.0` を付けると代わりにアイテムを付与し、かばんになくて構いません。RPG Plus はこのやり方で各職業に初期武器を与えています。複数のスロットが候補になるなら `slot=` で指定します。
 - `equip.remove` はスロットに装備中の物を外して、かばんへ戻します。
 - アイテムを装備している間、`equipped(who, 'item')` は真になります。
 

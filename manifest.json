@@ -1,7 +1,7 @@
 {
   "id": "equipment",
   "name": "Equipment",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "ct",
   "description": "Wearable gear for any game with stats: slots as data, items become equipment by their JSON keys, and worn bonuses flow into sheets, battles, checks and conditions at once.",
   "category": "gameplay",
@@ -11,7 +11,7 @@
   "test_sources": [
     "tests/*.cs"
   ],
-  "depends": ["stats_base>=1", "items_base>=1", "characters_base>=1", "ui_base>=1"],
+  "depends": ["stats_base>=0.1.0", "items_base>=0.1.0", "characters_base>=0.1.0", "ui_base>=0.1.0"],
   "test_suites": [
     {
       "id": "sheet_equip",

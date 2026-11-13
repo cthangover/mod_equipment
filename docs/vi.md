@@ -74,7 +74,7 @@ action equip.remove who=rpg_hero slot=weapon
 when "equipped(rpg_hero, 'classic/wood_sword')" -> :armed
 ```
 
-- `equip.put` mặc một vật phẩm từ túi; có `give=1` thì vật phẩm được cấp thẳng và không cần nằm trong túi. RPG Plus trao vũ khí khởi đầu cho từng lớp theo cách này. Khi nhiều ô đều vừa, dùng `slot=` để chỉ định.
+- `equip.put` mặc một vật phẩm từ túi; có `give>=0.1.0` thì vật phẩm được cấp thẳng và không cần nằm trong túi. RPG Plus trao vũ khí khởi đầu cho từng lớp theo cách này. Khi nhiều ô đều vừa, dùng `slot=` để chỉ định.
 - `equip.remove` tháo món đang mặc trong một ô, trả về túi.
 - Khi món đồ còn được mặc, `equipped(who, 'item')` đúng.
 
