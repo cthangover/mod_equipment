@@ -279,7 +279,7 @@ namespace Cthangover.Mods.Equipment.Tests
         /// <summary>Skips the crossroads prologue by taking the first answer: the dialog is never played out here.</summary>
         private static bool SkipPrologue()
         {
-            var scene = ((SceneTree)Engine.GetMainLoop()).Root.GetNodeOrNull<SceneManager>("SceneManager")?.CurrentSceneName;
+            var scene = ((SceneTree)Godot.Engine.GetMainLoop()).Root.GetNodeOrNull<SceneManager>("SceneManager")?.CurrentSceneName;
             if (string.IsNullOrEmpty(scene) || View?.Map != null)
                 return false;
             var box = RpgInput.FindDialogBox();
