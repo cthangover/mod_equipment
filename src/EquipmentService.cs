@@ -116,10 +116,10 @@ namespace Cthangover.Mods.Equipment
         }
 
         /// <summary>
-        /// What the character sheet's picker lists for <paramref name="slot"/>: the bag's items that
-        /// <paramref name="who"/> may put there, each id once, in bag order. The same
-        /// <see cref="CanEquip"/> rule as <see cref="Equip"/>, so the picker never offers what
-        /// the service would refuse.
+        /// What the character sheet's picker lists for <paramref name="slot"/>: positive ordinary bag stock that
+        /// <paramref name="who"/> may put there, each id once, in bag order. Protected occurrences stay with their
+        /// identity-aware owner and are excluded from this count-only picker. The same <see cref="CanEquip"/>
+        /// rule as <see cref="Equip"/> filters slot and character eligibility.
         /// </summary>
         public static List<string> BagCandidates(string who, string slot)
         {
@@ -127,7 +127,7 @@ namespace Cthangover.Mods.Equipment
             if (inventory == null || slot == null)
                 return new List<string>();
             return inventory.Items
-                .Where(c => c?.Item != null && c.Count > 0)
+                .Where(c => c is not InventoryInstanceContainer && c?.Item != null && c.Count > 0)
                 .Select(c => c.Item.ID)
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .Where(id => CanEquip(who, id, slot, out _))
