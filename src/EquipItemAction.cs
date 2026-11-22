@@ -10,15 +10,31 @@ namespace Cthangover.Mods.Equipment
     /// and the inventory takes the item away once this returns true — so gear needs no
     /// equipment screen of its own to be put on. The replaced item comes back to the bag.
     /// </summary>
-    public class EquipItemAction : ITargetedItemAction
+    public class EquipItemAction : ITargetedItemAction, IInventoryStackAction
     {
-        /// <inheritdoc />
-        public string ID => "action/equip";
+        /// <summary>Registered action key used by item blueprints.</summary>
+        public string ID
+        {
+            get
+            {
+                return "action/equip";
+            }
+        }
 
-        /// <inheritdoc />
-        public bool UseAction(IItem item) => false;
+        /// <summary>Equipment requires an explicit character target, so untargeted use refuses.</summary>
+        public bool UseAction(IItem item)
+        {
+            return false;
+        }
 
-        /// <inheritdoc />
+        /// <summary>Transfers the exact selected occurrence or group unit; the panel does not spend another equal blueprint.</summary>
+        public bool UseStack(Inventory inventory, string stackId, CharacterInfoData target)
+        {
+            return target != null && ReferenceEquals(GameData.Instance.Runtime.Inventory, inventory)
+                && EquipmentService.EquipStack(target.ID, stackId);
+        }
+
+        /// <summary>Legacy blueprint-only callers use the existing character eligibility rules.</summary>
         public bool UseOn(IItem item, CharacterInfoData target)
         {
             if (item == null || target == null)

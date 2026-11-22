@@ -21,7 +21,7 @@ namespace Cthangover.Mods.Equipment
     /// off returns the item. Every change tells the stats (sheets, battle attributes and
     /// conditions follow) and publishes <see cref="EquipmentChangedEvent"/>.
     /// </summary>
-    public static class EquipmentService
+    public static partial class EquipmentService
     {
         /// <summary>The running game's worn items (replaced on a new game and a load).</summary>
         public static EquipmentStateData Data { get; set; } = new();
@@ -77,7 +77,7 @@ namespace Cthangover.Mods.Equipment
         public static IReadOnlyDictionary<string, string> Worn(string who)
         {
             var id = StatsService.Resolve(who);
-            return Find(id) ?? new Dictionary<string, string>();
+            return StorageWorn(id);
         }
 
         /// <summary>The item in a slot of <paramref name="who"/>, or null.</summary>
@@ -126,12 +126,18 @@ namespace Cthangover.Mods.Equipment
             var inventory = Inventory;
             if (inventory == null || slot == null)
                 return new List<string>();
-            return inventory.Items
-                .Where(c => c is not InventoryInstanceContainer && c?.Item != null && c.Count > 0)
-                .Select(c => c.Item.ID)
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .Where(id => CanEquip(who, id, slot, out _))
-                .ToList();
+            var result = new List<string>();
+            var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var row in inventory.Items)
+            {
+                if (row?.Item != null && row.Count > 0 && seen.Add(row.Item.ID)
+                    && CanEquip(who, row.Item.ID, slot, out _))
+                {
+                    result.Add(row.Item.ID);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -149,6 +155,17 @@ namespace Cthangover.Mods.Equipment
             if (target == null)
                 return false;
             var inventory = Inventory;
+            if (inventory is Cthangover.Core.Items.Inventory owner)
+            {
+                if (fromInventory)
+                    return EquipStack(id, Cthangover.Core.Items.Inventory.StackId(owner.TryGet(itemId)), target.ID);
+                var tracked = TryStorageSlot(id, target.ID, out _, out _);
+                if (!owner.TryEquipStack("give_equipment/" + Guid.NewGuid().ToString("N"), null, id, target.ID,
+                    tracked ? null : ItemIn(id, target.ID), out _, itemId))
+                    return false;
+                Changed(id);
+                return true;
+            }
             if (fromInventory && (inventory == null || !inventory.Remove(itemId, 1)))
                 return false;
 
@@ -174,9 +191,34 @@ namespace Cthangover.Mods.Equipment
         public static bool Unequip(string who, string slot, bool toInventory = true)
         {
             var id = StatsService.Resolve(who);
+            if (TryStorageSlot(id, slot, out var owner, out var group))
+            {
+                if (group == null)
+                    return false;
+                var success = toInventory
+                    ? owner.TryMoveStack("unequip/" + Guid.NewGuid().ToString("N"), group.Id, "player", out _)
+                    : owner.TryExchange(new Dictionary<string, int> { [group.ItemId] = 1 }, new Dictionary<string, int>(), out _, group.Id);
+                if (success)
+                    Changed(id);
+                return success;
+            }
             var worn = Find(id);
             if (worn == null || slot == null || !worn.TryGetValue(slot, out var item))
                 return false;
+            if (toInventory && Inventory is Cthangover.Core.Items.Inventory legacyOwner && !string.IsNullOrEmpty(item))
+            {
+                var outputs = new Dictionary<string, int> { [item] = 1 };
+                if (!legacyOwner.CanExchange(new Dictionary<string, int>(), outputs))
+                    return false;
+                worn.Remove(slot);
+                if (!legacyOwner.TryExchange(new Dictionary<string, int>(), outputs, out _))
+                {
+                    worn[slot] = item;
+                    return false;
+                }
+                Changed(id);
+                return true;
+            }
             worn.Remove(slot);
             if (toInventory && !string.IsNullOrEmpty(item))
                 Inventory?.Add(item, 1);
@@ -196,7 +238,7 @@ namespace Cthangover.Mods.Equipment
         private static EquipSlotInfo PickSlot(string who, string itemId)
         {
             var fitting = SlotsFor(itemId);
-            var worn = Find(who);
+            var worn = Worn(who);
             return fitting.FirstOrDefault(s => worn == null || !worn.ContainsKey(s.ID)) ?? fitting.FirstOrDefault();
         }
 

@@ -86,3 +86,7 @@ What is worn is saved with the game.
 2. **The item cannot be put on.** No slot accepts its `Equip` type, or its `Archetypes` do not include the character's class.
 3. **The sheet does not change.** The item's `Traits` name stats the game does not define.
 4. **The list is empty.** The bag holds nothing that fits this slot for this character. Compare the item's `Equip` type with the slot's `Accepts`, and check its `Archetypes`.
+
+## Persistent groups and grid capacity
+
+Equipment now moves the selected group unit or 3D occurrence into an items-owned equipment compartment. Unequip returns the same identity and properties. Replacement and unequip refuse when the returned item cannot fit in the bag. The shared picker includes unique occurrences. Code integrations can select an exact identity with EquipmentService.EquipStack.
